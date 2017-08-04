@@ -10,7 +10,7 @@ const Polly = new AWS.Polly({
     region: 'us-east-1'
 });
 
-var whitelist = ['http://www.bbc.co.uk','http://test.com']
+var whitelist = ['http://localhost:3000','http://test.com']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -21,12 +21,12 @@ var corsOptions = {
   }
 }
 
-console.log(corsOptions);
+//console.log(corsOptions);
 
 // landing page
 router.post('/', cors(corsOptions), (req, res) => {
 		//aws voice params
-		console.log(corsOptions);
+		//console.log(corsOptions);
 		let params = {
 		'Text': req.body.keyname,
 		'OutputFormat': 'mp3',
