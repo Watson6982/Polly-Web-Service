@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var cors = require('cors');
 //aws
 var AWS = require('aws-sdk')
 var Fs = require('fs')
@@ -10,9 +10,23 @@ const Polly = new AWS.Polly({
     region: 'us-east-1'
 });
 
+var whitelist = ['http://www.bbc.co.uk','http://test.com']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+console.log(corsOptions);
+
 // landing page
-router.post('/', (req, res) => {
+router.post('/', cors(corsOptions), (req, res) => {
 		//aws voice params
+		console.log(corsOptions);
 		let params = {
 		'Text': req.body.keyname,
 		'OutputFormat': 'mp3',
@@ -23,7 +37,7 @@ router.post('/', (req, res) => {
 	}
 );
 
-router.get('/', (req, res) => {
+router.get('/', cors(corsOptions), (req, res) => {
 		//aws voice params
 		let params = {
 		'Text': req.query.keyname,
