@@ -31,11 +31,11 @@ router.get('/', (req, res) => {
 		'VoiceId': req.query.person
 		}
 		//voice synth
-		sendTextToPolly(params, res);
+		sendTextToPolly(params, res, req);
 	}
 );
 
-function sendTextToPolly(params, res) {
+function sendTextToPolly(params, res, req) {
 		//date variation for voice file name
 		var dt = Date.now();
 
@@ -57,8 +57,9 @@ function sendTextToPolly(params, res) {
 						return console.log(err)
 					}
 					console.log("The file was saved!")
+
 					//If successful return the voice file as a json object
-					res.status(200).json({file: "/assets/audio/speech"+ dt +".mp3"})
+					res.status(200).json({file: "https://" + req.headers.host + "/assets/audio/speech"+ dt +".mp3"})
 				})
 			}
 		}
