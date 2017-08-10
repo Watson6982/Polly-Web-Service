@@ -10,7 +10,7 @@ const Polly = new AWS.Polly({
     region: 'us-east-1'
 });
 
-var whitelist = ['http://localhost:3000/test','http://test.com','http://localhost:3000']
+var whitelist = ['http://localhost:3000/test','http://test.com','http://localhost:3000/']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
